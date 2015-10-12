@@ -3,10 +3,38 @@
 #include <string.h>
 #include <ctype.h>
 #include "phonebook_opt.h"
+#define lose  /* Choose hash function method djb2, sdbm, lose*/
 
 
 
 /* FILL YOUR OWN IMPLEMENTATION HERE! */
+static inline unsigned int hash(char lastName[])
+{
+    unsigned long value = 0;
+    int c = 0;
+    int length = strlen (lastName);
+#ifdef djb2
+    value = 5381;
+    while(c <= length) {
+        value = ((value << 5) + value) + lastName[c];
+        c++;
+    }
+#endif
+#ifdef sdbm
+    while(c <= length) {
+        value = lastName[c] + (value << 6) + (value << 16) - value;
+        c++;
+    }
+#endif
+#ifdef lose
+    while(c <= length) {
+        value += lastName[c];
+        c++;
+    }
+#endif
+    return value % hash_bucket_size;
+}
+
 entry *findName(char lastName[], entry **pHead)
 {
     unsigned int key = hash(lastName);
@@ -27,16 +55,4 @@ void *append(char lastName[], entry **e)
     e[key] = e[key] -> pNext;
     strcpy(e[key] -> lastName, lastName);
     e[key] -> pNext = NULL;
-}
-
-unsigned int hash(char lastName[])
-{
-    /* djb2 */
-    unsigned long value = 5381;
-    int c = 0;
-    while(c <= (int) strlen (lastName)) {
-        value = ((value << 5) + value) + lastName[c];   //sol * 33 + lastName[c]
-        c++;
-    }
-    return value % hash_bucket_size;
 }

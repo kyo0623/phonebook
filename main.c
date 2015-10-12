@@ -38,7 +38,7 @@ int main(int argc, char *argv[])
     }
 
     /* build the entry */
-#ifdef hash_method
+#ifdef HASHING_ALGORITHM
     entry *pHead[hash_bucket_size];
     entry *e[hash_bucket_size];
     for(i=0 ; i < hash_bucket_size ; i++) {
@@ -65,7 +65,7 @@ int main(int argc, char *argv[])
             i++;
         line[i - 1] = '\0';
         i = 0;
-#ifdef hash_method
+#ifdef HASHING_ALGORITHM
         append(line, e);
 #else
         e = append(line, e);
@@ -76,7 +76,7 @@ int main(int argc, char *argv[])
 
     /* close file as soon as possible */
     fclose(fp);
-#ifdef hash_method
+#ifdef HASHING_ALGORITHM
     for(i=0; i<hash_bucket_size; i++)
         e[i] = pHead[i];
 #else
@@ -103,7 +103,7 @@ int main(int argc, char *argv[])
     printf("execution time of findName() : %lf sec\n", cpu_time2);
 
     /* FIXME: release all allocated entries */
-#ifdef hash_method
+#ifdef HASHING_ALGORITHM
     for(i=0; i<hash_bucket_size; i++)
         free(pHead[i]);
 #else

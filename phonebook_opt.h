@@ -2,8 +2,8 @@
 #define _PHONEBOOK_H
 
 #define MAX_LAST_NAME_SIZE 16
-#define hash_method
-#define hash_bucket_size 1
+#define HASHING_ALGORITHM
+#define hash_bucket_size 1000
 
 /* original version */
 typedef struct __PHONE_BOOK_ENTRY {
@@ -26,6 +26,5 @@ typedef struct __last_name_ENTRY {
 
 entry *findName(char lastname[], entry **pHead);
 void *append(char lastName[], entry **e);
-unsigned int hash(char lastName[]);
 
 #endif
