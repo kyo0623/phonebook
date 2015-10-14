@@ -3,7 +3,7 @@
 
 #define MAX_LAST_NAME_SIZE 16
 #define HASHING_ALGORITHM
-#define hash_bucket_size 1000
+#define hash_bucket_size 997
 
 /* original version */
 typedef struct __PHONE_BOOK_ENTRY {
@@ -24,7 +24,16 @@ typedef struct __last_name_ENTRY {
     struct __last_name_ENTRY *pNext;
 } entry;
 
-entry *findName(char lastname[], entry **pHead);
-void *append(char lastName[], entry **e);
+struct PHONE_BOOK {
+    void (*initialize)(void);
+    void (*move_node)(void);
+    void (*new_node)(char lastName[], entry **node);
+    entry *(*findName)(char lastname[], entry **pHead);
+    void (*release)(void);
+};
+
+struct PHONE_BOOK PHONE_BOOK;
+entry *pHead[hash_bucket_size];
+entry *e[hash_bucket_size];
 
 #endif
