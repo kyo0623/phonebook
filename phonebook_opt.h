@@ -3,7 +3,7 @@
 
 #define MAX_LAST_NAME_SIZE 16
 #define HASHING_ALGORITHM
-#define hash_bucket_size 997
+#define hash_bucket_size 26000
 
 /* original version */
 typedef struct __PHONE_BOOK_ENTRY {
